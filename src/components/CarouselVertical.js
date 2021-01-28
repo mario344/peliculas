@@ -6,6 +6,8 @@ import Carousel from 'react-native-snap-carousel'
 
 import {BASE_PATH_IMG} from '../utils/constants'
 
+import {getGenreMovieApi} from '../api/movies'
+
 const {width} = Dimensions.get("window")
 const ITEM_WIDTH = Math.round(width * 0.7)
 
@@ -28,10 +30,18 @@ export default function CarouselVertical(props) {
 //renderiza el contenido de cada pelicula
 function RenderItem (props){
     const {data} = props;
-    const {title,poster_path} = data.item;
+    const {title,poster_path,genre_ids} = data.item;
+    const [genres, setgenres] = useState(null)
     const imageUrl = `${BASE_PATH_IMG}/w500${poster_path}`
 
-  console.log(imageUrl);
+    
+
+  useEffect(() => {
+     
+    getGenreMovieApi(genre_ids).then((response)=>{
+        console.log(response);
+    })
+  }, [])
 
 return(
 <TouchableWithoutFeedback onPress={()=> console.log('hola')}>
